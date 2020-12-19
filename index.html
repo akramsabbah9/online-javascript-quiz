@@ -25,7 +25,7 @@
                 hic delectus, odit repudiandae accusantium cum, voluptate sit unde, 
                 tenetur vitae qui.
             </p>
-            <button class="start-button">Start Quiz</button>
+            <button id="start-button">Start Quiz</button>
         </div>
 
         <div class="quiz-part" id="quiz">
@@ -39,8 +39,13 @@
 
         <div class="end-part" id="end">
             <h2>Your Quiz Has Ended!</h2>
-            <p>Your score was <span id="player-score"></span>.</p>
-            <form id="submit-score">
+            <p>
+                You answered <span id="correct-answers"></span> questions correct out of 
+                <span id="total-questions"></span>.
+                <br />
+                Your final score is <span id="player-score"></span>.
+            </p>
+            <form id="submit-score-form">
                 <label for="player-input">Enter Your Initials: </label>
                 <input type="text" name="player-initials" id="player-input" placeholder="AA" />
                 <button type="submit" class="to-high-scores">Submit</button>

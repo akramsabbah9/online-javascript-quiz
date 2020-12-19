@@ -28,7 +28,7 @@ var addScoreEl = function(scoreObj) {
 };
 
 /* send user to the main quiz page */
-var returnToIndex = function () {
+var returnToIndex = function() {
     window.location.href = "./index.html";
 };
 
@@ -41,8 +41,8 @@ var clearScores = function() {
 
 /* EVENT LISTENERS */
 // TODO: REMOVE. This checks if clear button works as intended
-var testStore = [{name: "AS", score: 40}, {name: "TE", score: 22}];
-localStorage.setItem("scores", JSON.stringify(testStore));
+// var testStore = [{name: "AS", score: 40}, {name: "TE", score: 22}];
+// localStorage.setItem("scores", JSON.stringify(testStore));
 
 backBtnEl.addEventListener("click", returnToIndex);
 clearBtnEl.addEventListener("click", clearScores);
