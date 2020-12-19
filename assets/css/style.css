@@ -1,1 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: x-large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* BEGIN TOP-BANNER STYLES */
+.top-banner {
+    margin: 12px 3%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.top-banner p {
+    margin: 0;
+}
+/* END TOP-BANNER STYLES */
+
+
+/* BEGIN MAIN/MISC STYLES */
+main {
+    margin-top: 5%;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+button {
+    outline: none;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-size: 1em;
+}
+
+/*.quiz-part, .end-part {
+     display: none;
+} */
+/* END MAIN/MISC STYLES */
+
+
+/* BEGIN LANDING STYLES */
+.landing-part {
+    text-align: center;
+    margin: 0 20%;
+}
+/* END LANDING STYLES */
+
+
+/* BEGIN QUIZ STYLES */
+.quiz-part {
+    margin: 0 25%;
+}
+
+.quiz-part h2 {
+    margin: 0;
+}
+/* END QUIZ STYLES */
+
+
+/* BEGIN FINISHING STYLES */
+.end-part {
+    margin: 0 25%;
+}
+/* END FINISHING STYLES */
+
+
+/* BEGIN HIGH SCORES STYLES */
+.scores-main {
+    margin: 8% 20%;
+}
+
+.scores {
+    /* TODO: fill in */
+}
+
+.score-item {
+    /* TODO: fill in */
+}
+/* END HIGH SCORES STYLES */
+
 /* Akram Sabbah */
