@@ -12,6 +12,11 @@ var loadScores = function() {
     // grab scores from localStorage and put into an array.
     // if null, scores becomes an empty array.
     var scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+    // sort scores from greatest to least using the sort function.
+    scores.sort(function(a, b) {
+        return b.score - a.score;
+    });
     
     // for each member of scores, add a score list item to scoresListEl.
     for (var i = 0; i < scores.length; i++) {
