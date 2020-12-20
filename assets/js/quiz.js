@@ -4,6 +4,16 @@ const questions = [
         question: "placeholder",
         answers: ["1", "2", "3", "4"],
         correct: 2
+    },
+    {
+        question: "placeholder2",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
+    },
+    {
+        question: "placeholder3",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
     }
 ];
 const maxTime = questions.length * 10; // 10 seconds for each question
@@ -14,12 +24,21 @@ var timer = 0;
  // this will stop countdown() once all questions are answered, and end the quiz
 var quizFinished = false;
 
+// grab main element
+var mainEl = document.querySelector("main");
+
 // grab each of the 3 divs in main and put them in an array
 var landingDivEl = document.querySelector("#landing");
 var quizDivEl = document.querySelector("#quiz");
 var endDivEl = document.querySelector("#end");
 
 var mainDivs = [landingDivEl, quizDivEl, endDivEl];
+
+// grab the previous-answer display div
+var ansDiv = document.querySelector("#previous");
+
+// this will point to ansDiv later in addCorrectnessDiv
+var oldAnsDiv = null;
 
 // grab button, time display, question, answer list, player score, and form elements
 var startBtnEl = document.querySelector("#start-button");
@@ -71,13 +90,11 @@ var takeQuiz = function() {
 };
 
 
-// TODO: displayQuestion function. display question, grab player answer;
-//       then modify score and timer accordingly.
+/* display the next question in the questions array and its answers. */
 var displayQuestion = function(qIndex) {
-    // get the current question and clear the answers list
+    // get the current question and its correct answer, and clear the answers list
     var currQuestion = questions[qIndex];
     var correctAns = currQuestion.answers[currQuestion.correct];
-    console.log(correctAns);
     answerListEl.innerHTML = "";
 
     // display current question
@@ -93,16 +110,19 @@ var displayQuestion = function(qIndex) {
     }
 };
 
+
 /* when an option button is clicked, it will increment score accordingly, and
    then call displayQuestion(qIndex + 1) unless the quiz is over. */
 var nextQuestionHandler = function(option, qIndex, correctAns) {
     option.addEventListener("click", function() {
-        // check if this answer is correct. If not, subtract 3 seconds from the timer.
+        // check if this answer is correct. If not, subtract some time from the timer.
         if (option.textContent === correctAns) {
             score++;
+            addCorrectnessDiv("Correct!");
         }
         else {
-            timer -= 3;
+            timer -= 5;
+            addCorrectnessDiv("Wrong!");
         }
 
         // display the next question or end the quiz
@@ -114,6 +134,30 @@ var nextQuestionHandler = function(option, qIndex, correctAns) {
             quizFinished = true;
         }
     });
+};
+
+
+/* delete the old ansDiv, display the message in the ansDiv, then append a new
+   div to the bottom of the main to use next time. This allows us to reset the
+   fading-opacity transition CSS. */
+var addCorrectnessDiv = function(message) {
+    // remove the oldAnsDiv
+    if (oldAnsDiv) {
+        mainEl.removeChild(oldAnsDiv);
+    }
+
+    // update the ansDiv with message and fade CSS classes
+    ansDiv.className = "ans-part fade-before fade-after";
+    ansDiv.textContent = message;
+
+    // create a new div to use next time around
+    var nextDiv = document.createElement("div");
+    nextDiv.className = "ans-part";
+
+    // set the old div to the current one, and the current div to the new one
+    mainEl.appendChild(nextDiv);
+    oldAnsDiv = ansDiv;
+    ansDiv = nextDiv;
 };
 
 
@@ -151,8 +195,8 @@ var endQuiz = function() {
 };
 
 
-/* validate form and store the player's name (aka initials) / score 
-   in localStorage, then continue to high scores page. */
+/* validate form and store the player's initials and score in localStorage,
+   then continue to high scores page. */
 var scoreFormHandler = function(event) {
     // prevent form submission from reloading the page, and get initials.
     event.preventDefault();

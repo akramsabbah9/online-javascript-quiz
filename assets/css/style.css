@@ -71,6 +71,22 @@ button {
 /* END FINISHING STYLES */
 
 
+/* BEGIN PREVIOUS ANSWER/FADE OUT STYLES */
+.ans-part {
+    margin: 0 25%;
+}
+
+.fade-before {
+    opacity: 1;
+    transition: 2s;
+}
+
+.fade-after {
+    opacity: 0;
+}
+/* END PREVIOUS ANSWER/FADE OUT STYLES */
+
+
 /* BEGIN HIGH SCORES STYLES */
 .scores-main {
     margin: 8% 20%;
