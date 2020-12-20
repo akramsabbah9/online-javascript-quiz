@@ -4,6 +4,8 @@ var scoresListEl = document.querySelector("#scores");;
 var backBtnEl = document.querySelector("#go-back");
 var clearBtnEl = document.querySelector("#clear");
 
+
+
 /* FUNCTIONS */
 /* grab scores from localStorage and list them in scoresListEl. */
 var loadScores = function() {
@@ -39,11 +41,9 @@ var clearScores = function() {
     scoresListEl.innerHTML = "";
 };
 
-/* EVENT LISTENERS */
-// TODO: REMOVE. This checks if clear button works as intended
-// var testStore = [{name: "AS", score: 40}, {name: "TE", score: 22}];
-// localStorage.setItem("scores", JSON.stringify(testStore));
 
+
+/* EVENT LISTENERS */
 backBtnEl.addEventListener("click", returnToIndex);
 clearBtnEl.addEventListener("click", clearScores);
 loadScores();

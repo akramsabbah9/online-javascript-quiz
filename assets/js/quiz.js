@@ -2,7 +2,7 @@
 const questions = [
     {
         question: "placeholder",
-        answers: ["1", "2", "3", "4"],
+        answers: ["111", "2", "3", "4"],
         correct: 2
     },
     {
@@ -14,12 +14,24 @@ const questions = [
         question: "placeholder3",
         answers: ["1", "2", "3", "4"],
         correct: 2
+    },
+    {
+        question: "placeholder4",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
+    },
+    {
+        question: "placeholder5",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
     }
 ];
 const maxTime = questions.length * 10; // 10 seconds for each question
 
+// set score, timer, and totalScore to zero
 var score = 0;
 var timer = 0;
+var totalScore = 0;
 
  // this will stop countdown() once all questions are answered, and end the quiz
 var quizFinished = false;
@@ -130,8 +142,9 @@ var nextQuestionHandler = function(option, qIndex, correctAns) {
             return displayQuestion(qIndex + 1);
         }
         else {
-            // if no questions remain, the countdown() function will end the quiz
+            // if no questions remain, end the quiz and stop countdown()
             quizFinished = true;
+            return endQuiz();
         }
     });
 };
@@ -171,13 +184,17 @@ var countdown = function() {
     
     // decrement timer each second until zero, or the quiz ends.
     var timeInterval = setInterval(function() {
-        timerEl.textContent = timer;
-        if (timer <= 0 || quizFinished) {
-            // if timer is negative, set it to zero
-            timerEl.textContent = 0;
+        // if timer finishes before the quiz, return endQuiz()
+        if (timer <= 0) {
             clearInterval(timeInterval);
             return endQuiz();
         }
+        // if the quiz finishes before timer, don't return endQuiz()
+        else if (quizFinished) {
+            clearInterval(timeInterval);
+            return;
+        }
+        timerEl.textContent = timer;
         timer--;
     }, 1000);
 };
@@ -188,10 +205,18 @@ var countdown = function() {
 var endQuiz = function() {
     changeState("end");
 
+    // reset timerEl, change timer to 0 if it's negative
+    timerEl.textContent = 0;
+    timer = Math.max(timer, 0);
+
+    // calculate total score
+    totalScore = score * 100 + timer;
+
+    // display results
     correctAnswersEl.textContent = score;
     totalQuestionsEl.textContent = questions.length;
-    timeBonusEl.textContent = Math.max(timer, 0); // change negative timer to 0
-    scoreEl.textContent = score * 100 + Math.max(timer, 0);
+    timeBonusEl.textContent = timer;
+    scoreEl.textContent = totalScore;
 };
 
 
@@ -211,7 +236,7 @@ var scoreFormHandler = function(event) {
     // make a scoreObj from the player's initials and score.
     var scoreObj = {
         name: initialsInput,
-        score: score
+        score: totalScore
     }
 
     // grab scores from localStorage and put into an array.

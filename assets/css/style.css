@@ -2,6 +2,15 @@
     box-sizing: border-box;
 }
 
+:root {
+    --primary: purple;
+    --secondary: white;
+    --tertiary: grey;
+    --bg-1: dodgerblue;
+    --bg-2: cornflowerblue;
+    font-size: 62.5%;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -37,6 +46,8 @@ button {
     border-radius: 12px;
     padding: 10px 15px;
     font-size: 1em;
+    background-color: var(--primary);
+    color: var(--secondary);
 }
 
 .quiz-part, .end-part {
@@ -61,6 +72,16 @@ button {
 .quiz-part h2 {
     margin: 0;
 }
+
+.answers {
+    list-style: none;
+    padding: 0;
+    margin: 0.8em 0;
+}
+
+.answers li {
+    padding: 2px 0;
+}
 /* END QUIZ STYLES */
 
 
@@ -68,17 +89,38 @@ button {
 .end-part {
     margin: 0 25%;
 }
+
+.end-part p {
+    margin-top: 0;
+    line-height: 1.5;
+}
+
+form {
+    margin-bottom: 0.8em;
+}
+
+form input {
+    outline: none;
+    padding: 8px 15px;
+    font-size: 1em;
+    border: 2px solid var(--tertiary);
+    border-radius: 12px;
+}
 /* END FINISHING STYLES */
 
 
 /* BEGIN PREVIOUS ANSWER/FADE OUT STYLES */
 .ans-part {
+    display: inline-block;
     margin: 0 25%;
+    padding-right: 10%;
+    color: var(--tertiary);
 }
 
 .fade-before {
+    border-top: 3px solid var(--tertiary);
     opacity: 1;
-    transition: 2s;
+    transition: opacity 1s ease-in;
 }
 
 .fade-after {
@@ -92,12 +134,23 @@ button {
     margin: 8% 20%;
 }
 
-.scores {
-    /* TODO: fill in */
+.scores-main ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: score-count;
 }
 
 .score-item {
-    /* TODO: fill in */
+    background-color: var(--bg-1);
+}
+
+.score-item:nth-child(2n) {
+    background-color: var(--bg-2);
+}
+
+.score-item::before {
+    counter-increment: score-count;
+    content: counter(score-count) ". ";
 }
 /* END HIGH SCORES STYLES */
 
