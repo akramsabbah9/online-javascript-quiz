@@ -1,5 +1,11 @@
 /* GLOBALS */
-const questions = ["placeholder"];
+const questions = [
+    {
+        question: "placeholder",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
+    }
+];
 const maxTime = questions.length * 10; // 10 seconds for each question
 
 var score = 0;
@@ -29,6 +35,7 @@ var answerListEl = document.querySelector("#answers");
 // elements to display the user's score
 var correctAnswersEl = document.querySelector("#correct-answers");
 var totalQuestionsEl = document.querySelector("#total-questions");
+var timeBonusEl = document.querySelector("#time-bonus");
 var scoreEl = document.querySelector("#player-score");
 
 // form to submit user's initials and score
@@ -66,11 +73,52 @@ var takeQuiz = function() {
 
 // TODO: displayQuestion function. display question, grab player answer;
 //       then modify score and timer accordingly.
+var displayQuestion = function(qIndex) {
+    // get the current question and clear the answers list
+    var currQuestion = questions[qIndex];
+    var correctAns = currQuestion.answers[currQuestion.correct];
+    console.log(correctAns);
+    answerListEl.innerHTML = "";
+
+    // display current question
+    questionEl.textContent = currQuestion.question;
+    // build answers for this question
+    for (var i = 0; i < currQuestion.answers.length; i++) {
+        var option = document.createElement("li");
+        option.innerHTML = `<button>${currQuestion.answers[i]}</button>`;
+
+        //  when option is clicked, check correctness and display the next question
+        nextQuestionHandler(option, qIndex, correctAns);
+        answerListEl.appendChild(option);
+    }
+};
+
+/* when an option button is clicked, it will increment score accordingly, and
+   then call displayQuestion(qIndex + 1) unless the quiz is over. */
+var nextQuestionHandler = function(option, qIndex, correctAns) {
+    option.addEventListener("click", function() {
+        // check if this answer is correct. If not, subtract 3 seconds from the timer.
+        if (option.textContent === correctAns) {
+            score++;
+        }
+        else {
+            timer -= 3;
+        }
+
+        // display the next question or end the quiz
+        if (qIndex < questions.length - 1) {
+            return displayQuestion(qIndex + 1);
+        }
+        else {
+            // if no questions remain, the countdown() function will end the quiz
+            quizFinished = true;
+        }
+    });
+};
 
 
-
-/* timing function. decrement timer by 1 every 1000 ms. Once timer reaches
-   zero or the questions ran out, end the Quiz regardless of how many questions were answered. */
+/* decrement timer by 1 every 1000 ms. End the quiz when prompted. If the timer
+   reaches zero, end the Quiz regardless of how many questions were answered. */
 var countdown = function() {
     // reset timerEl to maxTime
     timerEl.textContent = maxTime;
@@ -82,10 +130,9 @@ var countdown = function() {
         timerEl.textContent = timer;
         if (timer <= 0 || quizFinished) {
             // if timer is negative, set it to zero
-            timer = Math.max(timer, 0);
-            timerEl.textContent = timer;
+            timerEl.textContent = 0;
             clearInterval(timeInterval);
-            endQuiz();
+            return endQuiz();
         }
         timer--;
     }, 1000);
@@ -99,7 +146,8 @@ var endQuiz = function() {
 
     correctAnswersEl.textContent = score;
     totalQuestionsEl.textContent = questions.length;
-    scoreEl.textContent = score * 100 + timer;
+    timeBonusEl.textContent = Math.max(timer, 0); // change negative timer to 0
+    scoreEl.textContent = score * 100 + Math.max(timer, 0);
 };
 
 
