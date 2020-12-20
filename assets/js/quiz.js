@@ -1,8 +1,12 @@
 /* GLOBALS */
-const questions = [];
+const questions = ["placeholder"];
+const maxTime = questions.length * 10; // 10 seconds for each question
 
 var score = 0;
-var timer = questions.length * 10; // 10 seconds for each question
+var timer = 0;
+
+ // this will stop countdown() once all questions are answered, and end the quiz
+var quizFinished = false;
 
 // grab each of the 3 divs in main and put them in an array
 var landingDivEl = document.querySelector("#landing");
@@ -11,16 +15,23 @@ var endDivEl = document.querySelector("#end");
 
 var mainDivs = [landingDivEl, quizDivEl, endDivEl];
 
-// TODO: grab buttons, time span, question, answer list, player score, form
+// grab button, time display, question, answer list, player score, and form elements
 var startBtnEl = document.querySelector("#start-button");
 
+// element to display the timer
+var timerEl = document.querySelector("#timer");
+timerEl.textContent = 0; // initialize displayed time to zero
+
+// displays for question and answer options during the quiz
 var questionEl = document.querySelector("#question");
 var answerListEl = document.querySelector("#answers");
 
+// elements to display the user's score
 var correctAnswersEl = document.querySelector("#correct-answers");
 var totalQuestionsEl = document.querySelector("#total-questions");
 var scoreEl = document.querySelector("#player-score");
 
+// form to submit user's initials and score
 var formEl = document.querySelector("#submit-score-form");
 
 
@@ -47,22 +58,38 @@ var beginQuizHandler = function() {
 /* continue answering questions until there are none left. */
 var takeQuiz = function() {
     changeState("quiz");
-
-    for (var i = 0; i < questions.length; i++) {
-        // add question plus answer choices
-        //displayQuestion(i);
-        // when question is answered, progress to next question
-    }
-
-    // once all questions have been answered, continue to the end.
-    endQuiz();
+    // begin countdown, then display the first question
+    countdown();
+    displayQuestion(0);
 };
+
 
 // TODO: displayQuestion function. display question, grab player answer;
 //       then modify score and timer accordingly.
 
-// TODO: timing function. decrement timer by 1 every 1000 ms. Once timer reaches
-//       zero, end the Quiz regardless of how many questions were answered.
+
+
+/* timing function. decrement timer by 1 every 1000 ms. Once timer reaches
+   zero or the questions ran out, end the Quiz regardless of how many questions were answered. */
+var countdown = function() {
+    // reset timerEl to maxTime
+    timerEl.textContent = maxTime;
+    // have timer compensate for the extra second timeInterval takes to begin callback
+    timer = maxTime - 1;
+    
+    // decrement timer each second until zero, or the quiz ends.
+    var timeInterval = setInterval(function() {
+        timerEl.textContent = timer;
+        if (timer <= 0 || quizFinished) {
+            // if timer is negative, set it to zero
+            timer = Math.max(timer, 0);
+            timerEl.textContent = timer;
+            clearInterval(timeInterval);
+            endQuiz();
+        }
+        timer--;
+    }, 1000);
+};
 
 
 /* evaluate and display score. The final score is your
