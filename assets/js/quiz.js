@@ -1,29 +1,54 @@
 /* GLOBALS */
 const questions = [
     {
-        question: "placeholder",
-        answers: ["111", "2", "3", "4"],
+        question: "Which of the following is NOT a correct variable declaration?",
+        answers: [
+            "A. int a = 10;", 
+            "B. var a = 10;", 
+            "C. Both A and B are correct", 
+            "D. Neither A nor B is correct"
+        ],
+        correct: 0
+    },
+    {
+        question: "What are the six primitive data types in JavaScript?",
+        answers: [
+            "A. Char, BigInt, Double, Int, String, Boolean", 
+            "B. Number, Object, Boolean, String, BigInt, Symbol", 
+            "C. Undefined, String, Number, BigInt, Boolean, Symbol", 
+            "D. Boolean, Number, Symbol, Undefined, BigInt, Function"
+        ],
         correct: 2
     },
     {
-        question: "placeholder2",
-        answers: ["1", "2", "3", "4"],
-        correct: 2
+        question: "John wants to run my_function() ONCE after seven seconds have passed. Which should he use?",
+        answers: [
+            "A. setInterval(my_function, 700);", 
+            "B. setTimeout(my_function, 700);", 
+            "C. setInterval(my_function(), 700);", 
+            "D. setTimeout(my_function(), 700);"
+        ],
+        correct: 1
     },
     {
-        question: "placeholder3",
-        answers: ["1", "2", "3", "4"],
-        correct: 2
+        question: "Which of the following is a correct way to write a for loop that iterates over array arr?",
+        answers: [
+            "A. for (int i = 0; i < arr.length; i++) { ... }", 
+            "B. for (var i = 0; i < arr.length; ++i) { ... }", 
+            "C. for (var ele of arr) { ... }", 
+            "D. All of the above"
+        ],
+        correct: 1
     },
     {
-        question: "placeholder4",
-        answers: ["1", "2", "3", "4"],
-        correct: 2
-    },
-    {
-        question: "placeholder5",
-        answers: ["1", "2", "3", "4"],
-        correct: 2
+        question: "Which of the following is correct syntax for a string?",
+        answers: [
+            "A. \"This is a string.\"", 
+            "B. 'This is a string.'", 
+            "C. `This is a string.`", 
+            "D. All of the above"
+        ],
+        correct: 3
     }
 ];
 const maxTime = questions.length * 10; // 10 seconds for each question

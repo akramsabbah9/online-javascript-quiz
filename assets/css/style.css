@@ -6,9 +6,10 @@
     --primary: purple;
     --secondary: white;
     --tertiary: grey;
-    --bg-1: dodgerblue;
+    --quaternary: mediumorchid;
+    --bg-1: steelblue;
     --bg-2: cornflowerblue;
-    font-size: 62.5%;
+    /* font-size: 62.5%; */
 }
 
 body {
@@ -50,6 +51,10 @@ button {
     color: var(--secondary);
 }
 
+button:hover {
+    background-color: var(--quaternary);
+}
+
 .quiz-part, .end-part {
      display: none;
 }
@@ -70,10 +75,12 @@ button {
 }
 
 .quiz-part h2 {
+    font-size: 1.5em;
     margin: 0;
 }
 
 .answers {
+    display: inline-block;
     list-style: none;
     padding: 0;
     margin: 0.8em 0;
@@ -81,6 +88,11 @@ button {
 
 .answers li {
     padding: 2px 0;
+}
+
+.answers li button {
+    width: 100%;
+    text-align: left;
 }
 /* END QUIZ STYLES */
 
@@ -90,8 +102,12 @@ button {
     margin: 0 25%;
 }
 
+.end-part h2 {
+    margin-bottom: 0;
+}
+
 .end-part p {
-    margin-top: 0;
+    /* margin-top: 0; */
     line-height: 1.5;
 }
 
